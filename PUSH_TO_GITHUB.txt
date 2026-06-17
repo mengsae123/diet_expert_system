@@ -1,0 +1,60 @@
+================================================================================
+  PUSH YOUR CODE TO GITHUB - EXACT COMMANDS
+================================================================================
+
+Your GitHub Repository: https://github.com/mengsae123/diet_expert_system.git
+
+Copy and paste these commands one by one in Git Bash:
+
+================================================================================
+
+# 1. Navigate to your project folder
+cd /d/nutrition_diet_expert_system-main
+
+# 2. Check current status
+git status
+
+# 3. Stage all files (if not already done)
+git add .
+
+# 4. Commit files (if not already done)
+git commit -m "Initial commit: Ready for deployment"
+
+# 5. Add your GitHub repository as remote
+git remote add origin https://github.com/mengsae123/diet_expert_system.git
+
+# 6. Push to GitHub (you're on 'master' branch)
+git push -u origin master
+
+================================================================================
+
+If you get "remote origin already exists" error, run this first:
+git remote remove origin
+
+Then add it again:
+git remote add origin https://github.com/mengsae123/diet_expert_system.git
+
+Then push:
+git push -u origin master
+
+================================================================================
+
+After successful push, you'll see output like:
+Enumerating objects: X, done.
+Counting objects: 100% (X/X), done.
+...
+To https://github.com/mengsae123/diet_expert_system.git
+ * [new branch]      master -> master
+
+================================================================================
+
+NEXT: Deploy to Render.com (5 minutes)
+1. Go to: https://render.com
+2. Sign up with GitHub
+3. New Web Service
+4. Connect: diet_expert_system repository
+5. Click Create
+6. Wait 5 minutes
+7. Your app is LIVE!
+
+================================================================================
