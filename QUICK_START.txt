@@ -1,0 +1,86 @@
+================================================================================
+  NUTRITION DIET EXPERT SYSTEM - QUICK START
+================================================================================
+
+✓ STATUS: All Python extensions are installed and the application is running!
+
+--------------------------------------------------------------------------------
+  IMMEDIATE ACCESS
+--------------------------------------------------------------------------------
+
+1. Open your web browser
+2. Navigate to: http://127.0.0.1:5000
+3. Login with any of these credentials:
+
+   Admin:   username: Admin    password: 123456
+   Doctor:  username: Doctor   password: 123456  
+   User:    username: thearo   password: 123456
+
+--------------------------------------------------------------------------------
+  WHAT'S BEEN SET UP
+--------------------------------------------------------------------------------
+
+✓ Python 3.11.9 detected and ready
+✓ All dependencies installed from requirements.txt:
+  - Flask 2.3.3 (web framework)
+  - Flask-SQLAlchemy 3.1.1 (database ORM)
+  - Flask-Login 0.6.3 (authentication)
+  - Flask-Migrate 4.0.5 (database migrations)
+  - And all other required packages
+
+✓ Database configured:
+  - Type: SQLite (file-based, no server needed)
+  - Location: instance/expert_system_real.db
+  - Status: Created and seeded with data
+
+✓ Application server:
+  - Status: Running in background
+  - Address: http://127.0.0.1:5000
+  - Process: term_1781690758753_28bqgpdrtay
+
+--------------------------------------------------------------------------------
+  COMMON COMMANDS
+--------------------------------------------------------------------------------
+
+Start Server:
+  python run.py
+
+Stop Server:
+  Press CTRL+C in the terminal
+
+Reseed Database:
+  python seeds/seed.py restore
+
+Generate Test Users:
+  python seeds/seed.py reseed-users
+
+View All Seed Commands:
+  python seeds/seed.py
+
+--------------------------------------------------------------------------------
+  FILES CREATED FOR YOU
+--------------------------------------------------------------------------------
+
+1. .env - Environment configuration (ready for local development)
+2. SETUP_GUIDE.md - Comprehensive setup and usage guide
+3. LOGIN_CREDENTIALS.md - Test account credentials
+4. instance/expert_system_real.db - SQLite database with seed data
+
+--------------------------------------------------------------------------------
+  NEXT STEPS
+--------------------------------------------------------------------------------
+
+1. Open http://127.0.0.1:5000 in your browser
+2. Login with the credentials above
+3. Explore the features based on your role
+4. Read SETUP_GUIDE.md for detailed information
+
+--------------------------------------------------------------------------------
+  NEED HELP?
+--------------------------------------------------------------------------------
+
+- Check SETUP_GUIDE.md for troubleshooting
+- View application logs in the terminal where python run.py is running
+- Database is in: instance/expert_system_real.db
+
+================================================================================

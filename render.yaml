@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: nutrition-diet-expert
+    env: python
+    region: oregon
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn run:app --bind 0.0.0.0:$PORT
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: SECRET_KEY
+        generateValue: true
+      - key: SKIP_DB_CREATE_ALL
+        value: 0
+      - key: SESSION_COOKIE_SECURE
+        value: 1
+      - key: REMEMBER_COOKIE_SECURE
+        value: 1
+
+databases:
+  - name: nutrition-db
+    databaseName: nutrition_diet_db
+    plan: free

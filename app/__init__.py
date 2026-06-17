@@ -1,0 +1,75 @@
+from flask import Flask, redirect, url_for, render_template
+from sqlalchemy.exc import OperationalError, SQLAlchemyError
+from config import Config
+from extensions import db, csrf, login_manager, migrate
+from app.models.user import UserTable
+
+
+def create_app(config_class: type[Config] = Config):
+    app = Flask(__name__)
+    app.config.from_object(config_class)
+
+    db.init_app(app)
+    csrf.init_app(app)
+    login_manager.init_app(app)
+    migrate.init_app(app, db)
+
+    # Flask-Login settings
+    login_manager.login_view = "auth.login"
+    login_manager.login_message = "Please log in to access this page."
+    login_manager.login_message_category = "warning"
+
+    @login_manager.user_loader
+    def load_user(user_id: str):
+        return UserTable.query.get(int(user_id))
+
+    # Register blueprints
+    from app.routes.user_routes import user_bp
+    from app.routes.role_routes import role_bp
+    from app.routes.permission_routes import permission_bp
+    from app.routes.auth_routes import auth_bp
+    from app.routes.main_routes import main_bp
+    from app.routes.dashboard_routes import dashboard_bp
+
+    app.register_blueprint(user_bp)
+    app.register_blueprint(role_bp)
+    app.register_blueprint(permission_bp)
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(main_bp)
+    app.register_blueprint(dashboard_bp)
+
+    @app.errorhandler(OperationalError)
+    def handle_db_error(e):
+        app.logger.exception("Database operational error", exc_info=e)
+        return render_template("errors/503.html"), 503
+
+    @app.errorhandler(SQLAlchemyError)
+    def handle_sqlalchemy_error(e):
+        app.logger.exception("SQLAlchemy error", exc_info=e)
+        return render_template("errors/503.html"), 503
+
+    @app.errorhandler(500)
+    def handle_500(e):
+        app.logger.exception("Unhandled application error", exc_info=e)
+        return render_template("errors/500.html"), 500
+
+    # Home route now handled by main blueprint
+
+    # Create tables only when explicitly enabled (avoid conflicting with migrations)
+    with app.app_context():
+        try:
+            if not app.config.get("SKIP_DB_CREATE_ALL", False):
+                # Ensure model metadata is loaded without shadowing UserTable in this scope.
+                from app import models as _models  # noqa: F401
+
+                db.create_all()
+            try:
+                from app.services.rbac_service import migrate_permission_codes
+
+                migrate_permission_codes()
+            except Exception:
+                pass
+        except Exception:
+            pass  # DB unavailable at startup — error handlers will catch per-request failures
+
+    return app
